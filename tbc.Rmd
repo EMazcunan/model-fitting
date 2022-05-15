@@ -1,0 +1,15 @@
+# Modelos no lineales {#nls-tbc}
+
+Modelos como 
+$$y = \beta_1 \beta_2^{x}$$
+(modelo exponencial) o como
+$$y = \beta_1x^{\beta_2}$$
+(modelo potencial) no tienen una estructura lineal. 
+
+Para modelos lineales, el problema de encontrar los valores de los parámetros que minimizan el error cuadrático del ajuste se traduce en resolver el sistema de ecuaciones normales de Gauss, que es un sistema lineal.  
+Pero en el caso de modelos no lineales como los anteriores, la situación se complica porque ahora la solución viene dada por un sistema de ecuaciones no lineales. 
+
+En este capítulo veremos  cómo ajustar este tipo de modelos a una colección de  observaciones, usando la función `nls()`{.R} (**n**onlinear  **l**east **s**quares) de `r R()`.
+
+
+## Continuará ... {#tbc}

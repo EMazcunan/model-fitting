@@ -1,0 +1,277 @@
+# Modelos lineales {#lm}
+
+Como hemos visto en teoría, dada una variable dependiente $y$ y una variable independiente $x$,  un modelo lineal de parámetros $\beta_1$, $\beta_2$, ... $\beta_p$ tiene la forma
+
+$$
+y = \beta_1 f_1(x) + \beta_2 f_2(x) + \dots +\beta_p f_p(x),
+$$
+siendo $f_1$, $f_2$, $\dots$, $f_p$ funciones conocidas. 
+
+
+En este capítulo veremos  cómo ajustar este tipo de modelos para un conjunto observaciones usando la función `lm()`{.R} (**l**inear **m**odel) de `r R()`. 
+
+Veremos también cómo representar gráficamente un ajuste usando la función `geom_smooth()`{.R} del paquete `ggplot2`.
+
+## Planteamiento del problema: El prisma de vidrio
+
+```{r, include = FALSE, eval=FALSE}
+# Generar datos
+beta1 <- 1.5
+beta2 <- 5000
+beta3 <- 6000
+set.seed(100)
+refraction <- tibble(
+    lambda = seq(380, 780, 10),
+    n = beta1 + beta2 / lambda^2 + beta3 / lambda^4 + rnorm(length(lambda), sd = 0.001)
+)
+write_csv(
+    x = refraction,
+    file = file.path("data", "refraction.csv")
+)
+```
+
+Newton demostró con el prisma que la luz blanca es una mezcla de varios colores y que la refracción depende del color (longitud de onda).
+
+En un experimento, se eligieron diferentes longitudes de onda $\lambda$ y se trazó el camino seguido por el rayo de luz que atraviesa el prisma, midiendo el ángulo de desviación para, a partir del mismo, calcular el índice de refracción $n$ del vidrio para el color seleccionado.
+
+Los datos obtenidos se recogen en  el archivo [`refraction.csv`](https://drive.google.com/uc?export=download&id=1fI5_KZA8MAiZVegFmtlQ7Cm4IzlGDQtg)(click para descargar), que contiene las variables:
+
+* `lambda`: longitud de onda $\lambda$, medida en $nm$.
+
+* `n`: índice de refracción.
+
+
+Descarga el fichero `refraction.csv` y guárdalo en una carpeta de nombre `data` dentro de tu directorio de trabajo. 
+
+Importamos los datos con `read_csv()`{.R} y los guardamos en un objeto de nombre `refraction`:
+```{r}
+refraction <- read_csv("data/refraction.csv")
+```
+Visualizamos los datos dibujando la nube de puntos $(\lambda, n)$ con `geom_point()`{.R}: 
+
+```{r}
+ggplot(
+    data = refraction,
+    mapping = aes(x = lambda, y = n)
+) +
+    geom_point()
+```
+
+
+## Ajuste con `lm()`
+
+Tomaremos como modelo la fórmula de Cauchy para los índices de refracción $n$ en la región visible del espectro de longitud de onda $\lambda$:
+$$n(\lambda) = \beta_1 + \frac{\beta_2}{\lambda^2} + \frac{\beta_3}{\lambda^4}$$
+donde $\beta_1$, $\beta_2$ y $\beta_3$ son los parámetros a ajustar.
+
+
+Como se indicó antes, la función de `r R()` para ajustar modelos lineales es `lm()`{.R}. En la siguiente instrucción se utiliza la función `lm()`{.R} para ajustar el modelo propuesto a las observaciones de nuestra hoja de datos, y se guarda el resultado en un objeto de nombre `fit_cauchy`:
+
+
+```{r}
+fit_cauchy <- lm(
+    data = refraction,
+    formula = n ~ I(1 / lambda^2) + I(1 / lambda^4)
+)
+```
+
+En el código anterior, hemos usado los argumentos `data`, para especificar la hoja de datos con las observaciones, y `formula`, para indicar la fórmula del modelo (enseguida explicaremos cómo construir esta fórmula). 
+
+El resultado  se almacena en un objeto de nombre `fit_cauchy`.
+
+Si imprimimos el objeto `fit_cauchy` veremos los coeficientes del ajuste:
+
+```{r}
+fit_cauchy
+```
+
+
+La instrucción `summary(fit_cauchy)`{.R} revela que el objeto `fit_cauchy` contiene mucha más información de la que muestra su simple impresión:
+```{r}
+summary(fit_cauchy)
+```
+Ésta es la razón por la que hemos creado el objeto `fit_cauchy` para almacenar la salida de la función `lm()`{.R}: lo  usaremos en los siguientes apartados para extraer información del ajuste realizado.
+
+## Fórmulas en R
+
+Al usar la función `lm()`{.R}, hemos indicado el siguiente valor para el argumento `formula` :
+
+:::{.center}
+ `n ~ I(1/lambda^2) + I(1/lambda^4)`
+:::
+
+La expresión anterior es un objeto de `r R()` de tipo `formula`, que se corresponde con la fórmula de Cauchy que estamos usando como módelo  
+
+$$n(\lambda) = \beta_1 + \frac{\beta_2}{\lambda^2} + \frac{\beta_3}{\lambda^4}.$$
+
+En la siguiente tabla se muestran algunos ejemplos más de fórmulas en `r R()` correspondientes a diferentes modelos:
+
+Modelo  | `formula`
+:-----: | :-----:
+$y=\beta_1+\beta_2x$ | `y ~ x`
+$y=\beta_1 x$  | `y ~ 0 + x`
+$y=\beta_1 + \beta_2 x + \beta_3 x^2$ | `y ~ x + I(x^2)`
+$y=\beta_1 \cos(x)+ \beta_2\sin(x)$ | `y ~ 0 + I(cos(x)) + I(sin(x))`
+
+
+Para especificar la fórmula de un modelo en `r R()` hay que tener en cuenta las siguientes reglas:
+
+
+* Cada sumando en una fórmula de `r R()`, indica la función que multiplica a un parámetro em la fórmula del modelo. Así, el sumando `x` en una fórmula de `r R()` será un sumando de la forma $\beta_ix$ en la fórmula matemática del modelo.
+
+
+* `r R()` añade siempre una constante como primer sumando de la fórmula del modelo ($\beta_1$ en los ejemplos anteriores). Para evitar la inclusión automática de esa constante hay que escribir el sumando `0`. Así, la fórmula `y ~ x` se corresponde con $y = \beta_1 + \beta_2x$; y si se quiere omitir la constante $\beta_1$, se ha de escribir `y ~ 0 + x`.
+
+* Las funciones que son una transformación de la variable independiente se han de escribir incluidas en la función identidad `I()`. Por ejemplo, un término de la forma $\beta_i x^2$ en la fórmula de un modelo se escribe en `r R()` como `I(x^2)`.
+
+
+## Coeficientes
+
+Para obtener los coeficientes del ajuste usamos la función `coefficients()`{.R}:
+
+```{r}
+coefficients(fit_cauchy)
+```
+
+
+```{r, include=FALSE}
+fit_cauchy$coefficients
+coef(fit_cauchy) # alias
+```
+La salida nos informa de que los coeficientes que solucionan el problema de mínimos cuadrados (ecuaciones normales de Gauss) son:
+$$\hat{\beta_1} = 1.50031,$$
+$$\hat{\beta_2} = 4908.268,$$
+y 
+$$\hat{\beta_3} = 7078042.$$
+
+**Nota:** Dependiendo de la configuración, los valores de la salida pueden aparecer en notación científica, simbolizando `e+00`, `e+03` y `e+06` que hay que multiplicar por $10^0=1$, $10^3=1000$ y $10^6=1000000$ respectivamente.  
+
+```{r, include=FALSE}
+summary(fit_cauchy)$coefficients
+summary(fit_cauchy)$coefficients[2, ]
+```
+
+Por tanto el ajuste buscado es 
+$$n(\lambda) = 1.50031 + \frac{4908.268}{\lambda^2} + \frac{7078042}{\lambda^4}.$$
+
+## Valores ajustados
+
+Los valores ajustados (o esperados) para la variable dependiente se obtienen con la función `fitted()`{.R}:
+
+```{r}
+fitted(fit_cauchy)
+```
+
+```{r, include = FALSE}
+fit_cauchy$fitted.values
+predict(fit_cauchy)
+```
+
+## Residuos
+
+Para obtener los residuos del ajuste ($\varepsilon_i$) usamos la función `residuals()`{.R}:
+
+```{r}
+residuals(fit_cauchy)
+```
+
+```{r, include=FALSE}
+fit_cauchy$residuals
+resid(fit_cauchy) # alias
+```
+
+Para calcular el error cuadrático del ajuste ($RSS$) usamos
+
+```{r}
+sum(residuals(fit_cauchy)^2)
+```
+
+En el resumen del ajuste podemos leer 
+
+:::{.center}
+`Residual standard error: 0.0007213 on 38 degrees of freedom`
+:::
+
+El error estandard residual, que suele denotarse $\sigma$, se obtiene con la función `sigma()`{.R}. 
+```{r}
+sigma(fit_cauchy)
+```
+
+La relación entre esta cantidad $\sigma$ y el error cuadrático $RSS$ es:
+$$\sigma = \sqrt{RSS/38}$$
+o equivalentemente
+$$RSS=38\sigma^2.$$
+El valor $38$, se llama grados de libertad de los residuos y se obtiene de restar, a las $n=41$ observaciones, los $p=3$ parámetros del modelo. Se obtiene con la función `df.residual()`{.R}. Comprobamos la relación entre el error residual estandar y $RSS$:
+
+```{r}
+df.residual(fit_cauchy) * sigma(fit_cauchy)^2 # RSS
+```
+
+## Predicciones
+
+La siguiente tabla recoge las longitudes de onda correspondientes a algunos colores del arcoiris:
+
+Color | $\lambda$
+:--- | :---
+Rojo | 640
+Amarillo | 589
+Verde | 509
+Azul | 486
+Violeta | 434
+
+Queremos calcular los índices de refracción que predice nuestro ajuste para los colores anteriores. Para hacerlo usamos la función `predict()`{.R}:
+
+```{r}
+# hoja de datos con los nuevos valores de lambda
+new_lambda <- tibble(
+    lambda = c(640, 589, 509, 486, 434)
+)
+# predicciones
+predict(
+    fit_cauchy,
+    new_lambda
+)
+```
+
+En la función `predict()`{.R} indicamos como primer argumento nuestro ajuste `fit_cauchy` y como segundo argumento una hoja de datos, que hemos llamado `new_lambda`, con los nuevos valores para la variable independiente `lambda`. Hemos construido dicha hoja de datos con la función `tibble()`{.R} (*tidy table*).  
+
+## Gráfico del ajuste
+
+Al comienzo del problema representamos la nube de puntos de nuestras observaciones con la función `geom_point()`{.R}. Añadimos ahora el gráfico del ajuste con la función `geom_smooth()`{.R}:
+
+```{r}
+ggplot(
+    data = refraction,
+    mapping = aes(x = lambda, y = n)
+) +
+    geom_point() +
+    geom_smooth(
+        method = "lm",
+        formula = y ~ I(1 / x^2) + I(1 / x^4),
+        se = FALSE
+    )
+```
+
+En los argumentos de `geom_smooth()`{.R} hemos escrito  `method = "lm"`{.R} para indicar que el ajuste se realiza con la función `lm()`{.R}.
+
+Notar que al especificar la fórmula del modelo en el argumento `formula` no se utilizan los nombres `lambda` y `n` de las variables --como se hizo en la función `lm()`{.R}-- sino los nombres `x` e `y` de las estéticas asociadas.  
+
+
+El argumento `se = FALSE`{.R} inhibe representar los intervalos de confianza (que estudiaremos en el último tema del curso).
+
+```{r,include=FALSE}
+# Gráfico con `geom_line()` y `fitted()`
+ggplot(data = refraction, mapping = aes(x = lambda)) +
+    geom_point(mapping = aes(y = n)) +
+    geom_line(
+        mapping = aes(y = fitted(fit_cauchy), group = 1)
+    )
+# Gráfico con `geom_function()` y `predict()`
+ggplot(data = refraction, aes(x = lambda, y = n)) +
+    geom_point() +
+    geom_function(
+        fun = function(new_x) {
+            predict(fit_cauchy, tibble(lambda = new_x))
+        }
+    )
+```

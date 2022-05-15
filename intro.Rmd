@@ -1,0 +1,28 @@
+#  Introducción {#intro .unnumbered}
+
+En esta práctica estudiaremos cómo ajustar un modelo a un conjunto de datos experimentales, mediante la técnica de mínimos cuadrados, usando `r R()`. 
+
+Mientras que en los problemas que hemos a mano hasta ahora hemos considerado únicamente modelos lineales de uno o dos parámetros, en esta práctica consideraremos modelos tanto lineales como no lineales, y con un número arbitrario de parámetros. También podremos trabajar con un número de datos mucho más elevado que en los problemas resueltos a mano.  
+
+Seguiremos trabajando con una variable dependiente $y$ y una única variable dependiente $x$, aunque las técnicas que presentaremos se generalizan sin dificultad al caso de varias variables independientes. 
+
+## Requisitos previos {#prerequisites .unnumbered}
+
+Antes de comenzar esta práctica, necesitas:
+
+* Tener `r R()` y `r RStudio()` instalados en tu equipo (ver [Instalación de R y RStudio](https://emazcunan.github.io/install-r-rstudio/){target="_blank"}).
+
+* Haber estudiado la práctica [Primeros pasos con R y RStudio](https://emazcunan.github.io/basics-r-rstudio/){target="_blank"}.
+
+
+## Flujo de trabajo {#workflow .unnumbered}
+
+Documenta lo que vayas aprendiendo conforme leas la práctica usando un documento R Markdown. Puedes utilizar [esta plantilla](https://drive.google.com/uc?id=1t9pjP_1Kjo8wgtav_I6hPHXxb5BqTIrc&export=download). 
+
+Se recomienda guardar el archivo R Markdown en una carpeta propia. En dicha carpeta se creará el archivo `r textsf("HTML")` resultante de la compilación y después añadiremos los archivos con los datos que usaremos a lo largo de la práctica. 
+
+
+Recuerda que para crear encabezados se utiliza la sintaxis `#` (nivel 1), `##` (nivel 2), ...; y que los bloques de código se crean con el atajo `Ctrl + Alt + I`.
+
+Respecto al seccionado del documento, lo más práctico es que imites la estructura de este guión de prácticas. 
+

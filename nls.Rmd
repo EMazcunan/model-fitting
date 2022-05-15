@@ -1,0 +1,151 @@
+# Modelos no lineales {#nls}
+
+Modelos como 
+$$y = \beta_1 \beta_2^{x}$$
+(modelo exponencial) o como
+$$y = \beta_1x^{\beta_2}$$
+(modelo potencial) no tienen una estructura lineal. 
+
+Para modelos lineales, el problema de encontrar los valores de los parámetros que minimizan el error cuadrático del ajuste se traduce en resolver el sistema de ecuaciones normales de Gauss, que es un sistema lineal.  
+Pero en el caso de modelos no lineales como los anteriores, la situación se complica porque ahora la solución viene dada por un sistema de ecuaciones no lineales. 
+
+En este capítulo veremos  cómo ajustar este tipo de modelos a una colección de  observaciones, usando la función `nls()`{.R} (**n**onlinear  **l**east **s**quares) de `r R()`.
+
+## Planteamiento del problema: Ley de enfriamiento de Newton
+
+```{r, include = FALSE, eval=FALSE}
+# Generar datos
+T0 <- 105
+Ta <- 19
+k <- 0.06
+set.seed(100)
+temperatures <- tibble(
+    time = seq(1, 60, 1),
+    temp = Ta + (T0 - Ta) * exp(-k * time) + c(0, rnorm(length(time) - 1, sd = 0.5))
+)
+write_csv(
+    x = temperatures,
+    file = file.path("data", "temperatures.csv")
+)
+```
+
+
+La ley de enfriamiento de Newton  establece que cuando un sólido a temperatura inicial $T_0$ se deja enfriar en un ambiente de  temperatura $T_a$,  su temperatura en función del tiempo $t$ viene dada por
+$$T(t)=T_a+(T_0-T_a)e^{-kt}$$
+donde $k$ es una constante que depende de la forma del sólido y del calor específico del material que lo componga. 
+
+En un experimento se calentó una barra de hierro hasta una temperatura inicial de $T_0$ y después se dejó enfriar en un ambiente a temperatura $T_a$. Se midió la temperatura de la barra a intervalos de tiempo de $1$ minuto, durante una hora. Los datos obtenidos se recogen en  el archivo [`temperatures.csv`](https://drive.google.com/uc?export=download&id=1mpF0_lZVw-u2SlrxJDwczEI4x_OxO1W2)(click para descargar), que contiene las variables:
+
+* `time`: tiempo transcurrido, en minutos, desde el instante inicial ($t=0$).
+
+* `temp`: temperatura de la barra de hierro, en ºC.
+
+
+Como antes, descarga el fichero `newton.csv` y guárdalo en una carpeta de nombre `data` dentro de tu directorio de trabajo. Importamos los datos con `read_csv()` y los guardamos en un objeto de nombre `newton`:
+```{r}
+temperatures <- read_csv("data/temperatures.csv")
+```
+Visualizamos los datos dibujando la nube de puntos $(t, T)$ con `geom_point()`{.R}: 
+
+```{r}
+ggplot(
+    data = temperatures,
+    mapping = aes(x = time, y = temp)
+) +
+    geom_point()
+```
+
+## Ajuste con `nls()`
+
+Antes de utilizar la función `nls()` necesitamos crear una función para la fórmula de la temperatura en nuestro modelo, que tiene como argumentos la variable independiente $t$, y los tres parámetros $T_0$, $T_a$ y $k$:
+
+```{r}
+T_model <- function(t, Ta, T0, k) {
+    Ta + (T0 - Ta) * exp(-k * t)
+}
+```
+
+También necesitamos proporcionar unos valores iniciales para los parámetros. Estos valores iniciales ayudarán en el proceso de optimización del error cuadrático (que pasa por resolver un sistema no lineal). A la vista de los datos tomaremos $20$ como valor inicial para $T_a$ y $100$ como valor inicial para $T_0$. Para el valor inicial de $k$, tomamos $0.05$. (En la tarea de evaluación se propondrán los valores iniciales para los correspondientes parámetros).
+
+Con los elementos anteriores, ya podemos utilizar la función `nls()`. Utilizaremos la función `T_model` que acabamos de definir para el valor del argumento `formula`, e indicaremos los valores iniciales de los parámetros en el argumento `start`, en forma de lista con la función `list()`:
+
+```{r}
+fit_newton <- nls(
+    data = temperatures,
+    formula = temp ~ T_model(time, Ta, T0, k),
+    start = list(Ta = 20, T0 = 100, k = 0.05)
+)
+```
+
+## Coeficientes
+
+Los coeficientes del ajuste son:
+```{r}
+coefficients(fit_newton)
+```
+
+Redondeando los resultados a dos decimales, las  estimaciones obtenidas son 
+$$\hat{T_a} = 19.03,$$
+$$\hat{T_0}=104.98,$$
+y 
+$$\hat{k}=0.06,$$ 
+y el ajuste quedaría:
+
+$$T(t) = 19.03 + (104.98-19.03)e^{-0.06t}.$$
+
+## Predicciones
+
+Los pronósticos para las temperaturas a la que se encontrará la barra de hierro a los $70$, $80$ y $90$ minutos serían:
+
+```{r}
+predict(
+    fit_newton,
+    tibble(time = c(70, 80, 90))
+)
+```
+
+
+## Gráfico ajuste
+
+Como en el capítulo anterior usamos la función `geom_smooth()` para representar el ajuste:
+
+```{r}
+ggplot(
+    data = temperatures,
+    mapping = aes(x = time, y = temp)
+) +
+    geom_point() +
+    geom_smooth(
+        method = "nls",
+        formula = y ~ T_model(x, T0, Ta, k),
+        method.args = list(
+            start = list(T0 = 100, Ta = 20, k = 0.05)
+        ),
+        se = FALSE # intervalo de confianza no implementado en predict.nls
+    )
+```
+
+En los argumentos de `geom_smooth()` hemos escrito ahora `method = "nls"` para indicar que el ajuste se realiza con la función `nls()`.
+
+El argumento `start` que requiere la función `nls()` se especifica en `method.args = list(...)`.
+
+Notar que hemos usado nuestra función `T_model()` para especificar la fórmula del modelo, como al usar la función `nls()`,  pero que en este caso no se utilizan los nombres `time` y `temp` de las variables sino los nombres `x` e `y` de las correspondientes estéticas.
+
+El argumento `se = FALSE` es necesario en este caso (si no lo incluyes obtendrás un error) por una cuestión técnica que no vamos a detallar.
+
+```{r, include = FALSE}
+# Con `geom_line`
+ggplot(data = temperatures, mapping = aes(x = time)) +
+    geom_point(mapping = aes(y = temp)) +
+    geom_line(
+        mapping = aes(y = fitted(fit_newton))
+    )
+# Con `geom_function`
+ggplot(data = temperatures, mapping = aes(x = time, y = temp)) +
+    geom_point() +
+    geom_function(
+        fun = function(u) {
+            predict(fit_newton, tibble(u))
+        }
+    )
+```

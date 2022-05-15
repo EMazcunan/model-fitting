@@ -1,0 +1,12 @@
+# Paquetes {#packages}
+
+Para utilizar las funciones que aparecerán a lo largo de la práctica empezamos cargando el paquete tidyverse:
+
+```{r}
+library("tidyverse")
+```
+
+Aunque se puede cargar un paquete en cualquier punto de un documento R Markdown, se considera una buena práctica cargar todos los paquetes al inicio. 
+
+Así que, si a lo largo de la práctica fuera necesario cargar más paquetes, escribe la correspondiente instrucción para cargarlos con la función `library()`{.R} al comienzo de tu documento, junto con esta primera instrucción.
+

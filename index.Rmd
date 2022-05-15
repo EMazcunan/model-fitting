@@ -1,0 +1,18 @@
+---
+documentclass: "mnye"
+classoption: [title=normal, notoc, bib=normal]
+author: "Eva María Mazcuñán Navarro"
+github-repo: "EMazcunan/fitting"
+title: "Ajuste de datos con R"
+degree: "Grado en Ingeniería Informática/Mecánica"
+term: "2021-2022"
+bibliography: [book.bib, packages.bib]
+link-citations: yes
+site: bookdown::bookdown_site
+---
+
+```{r,child="preamble.Rmd"}
+
+```
+
+#  {.unlisted .unnumbered}
