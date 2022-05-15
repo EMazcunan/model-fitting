@@ -34,7 +34,7 @@ Newton demostró con el prisma que la luz blanca es una mezcla de varios colores
 
 En un experimento, se eligieron diferentes longitudes de onda $\lambda$ y se trazó el camino seguido por el rayo de luz que atraviesa el prisma, midiendo el ángulo de desviación para, a partir del mismo, calcular el índice de refracción $n$ del vidrio para el color seleccionado.
 
-Los datos obtenidos se recogen en  el archivo [`refraction.csv`](https://drive.google.com/uc?export=download&id=1fI5_KZA8MAiZVegFmtlQ7Cm4IzlGDQtg)(click para descargar), que contiene las variables:
+Los datos obtenidos se recogen en  el archivo [`refraction.csv`](https://drive.google.com/uc?export=download&id=1fI5_KZA8MAiZVegFmtlQ7Cm4IzlGDQtg) (click para descargar), que contiene las variables:
 
 * `lambda`: longitud de onda $\lambda$, medida en $nm$.
 
