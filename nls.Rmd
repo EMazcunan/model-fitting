@@ -21,7 +21,7 @@ k <- 0.06
 set.seed(100)
 temperatures <- tibble(
     time = seq(1, 60, 1),
-    temp = Ta + (T0 - Ta) * exp(-k * time) + c(0, rnorm(length(time) - 1, sd = 0.5))
+    temp = round(Ta + (T0 - Ta) * exp(-k * time) + c(0, rnorm(length(time) - 1, sd = 0.5)), 1)
 )
 write_csv(
     x = temperatures,
