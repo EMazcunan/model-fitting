@@ -2,7 +2,7 @@
 documentclass: "mnye"
 classoption: [title=normal, notoc, bib=normal]
 author: "Eva María Mazcuñán Navarro"
-github-repo: "EMazcunan/fitting"
+github-repo: "EMazcunan/model-fitting"
 title: "Ajuste de datos con R"
 degree: "Grado en Ingeniería Informática/Mecánica"
 term: "2021-2022"
