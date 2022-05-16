@@ -41,7 +41,7 @@ En un experimento se calentó una barra de hierro hasta una temperatura inicial 
 * `temp`: temperatura de la barra de hierro, en ºC.
 
 
-Como antes, descarga el fichero `newton.csv` y guárdalo en una carpeta de nombre `data` dentro de tu directorio de trabajo. Importamos los datos con `read_csv()` y los guardamos en un objeto de nombre `newton`:
+Como antes, descarga el fichero `temperatures.csv` y guárdalo en la carpeta de nombre `data` dentro de tu directorio de trabajo. Importamos los datos con `read_csv()`{.R} y los guardamos en un objeto de nombre `temperatures`:
 ```{r}
 temperatures <- read_csv("data/temperatures.csv")
 ```
@@ -57,25 +57,31 @@ ggplot(
 
 ## Ajuste con `nls()`
 
-Antes de utilizar la función `nls()` necesitamos crear una función para la fórmula de la temperatura en nuestro modelo, que tiene como argumentos la variable independiente $t$, y los tres parámetros $T_0$, $T_a$ y $k$:
+Antes de utilizar la función `nls()`{.R} crearemos una función para la fórmula de la temperatura en nuestro modelo de la ley de Newton
+$$T(t)=T_a+(T_0-T_a)e^{-kt}$$
+que tiene como argumentos la variable independiente $t$, y los tres parámetros $T_0$, $T_a$ y $k$. La llamamos `newton`.
 
 ```{r}
-T_model <- function(t, Ta, T0, k) {
+newton <- function(t, Ta, T0, k) {
     Ta + (T0 - Ta) * exp(-k * t)
 }
 ```
 
-También necesitamos proporcionar unos valores iniciales para los parámetros. Estos valores iniciales ayudarán en el proceso de optimización del error cuadrático (que pasa por resolver un sistema no lineal). A la vista de los datos tomaremos $20$ como valor inicial para $T_a$ y $100$ como valor inicial para $T_0$. Para el valor inicial de $k$, tomamos $0.05$. (En la tarea de evaluación se propondrán los valores iniciales para los correspondientes parámetros).
+También necesitamos proporcionar unos valores iniciales para los parámetros $T_0$, $T_a$ y $k$. Estos valores iniciales ayudarán en el proceso de optimización del error cuadrático (que como hemos dicho antes, pasa por resolver un sistema de ecuaciones no lineales). 
 
-Con los elementos anteriores, ya podemos utilizar la función `nls()`. Utilizaremos la función `T_model` que acabamos de definir para el valor del argumento `formula`, e indicaremos los valores iniciales de los parámetros en el argumento `start`, en forma de lista con la función `list()`:
+A la vista de los datos tomaremos $20$ como valor inicial para $T_a$ y $100$ como valor inicial para $T_0$. Para el valor inicial de $k$, tomamos $0.05$. (En la tarea de evaluación se propondrán los valores iniciales para los correspondientes parámetros).
+
+Con los elementos anteriores, ya podemos utilizar la función `nls()`{.R}. Utilizaremos la función `newton` que acabamos de definir para el valor del argumento `formula`, e indicaremos los valores iniciales de los parámetros en el argumento `start`, en forma de lista con la función `list()`{.R}:
 
 ```{r}
 fit_newton <- nls(
     data = temperatures,
-    formula = temp ~ T_model(time, Ta, T0, k),
+    formula = temp ~ newton(time, Ta, T0, k),
     start = list(Ta = 20, T0 = 100, k = 0.05)
 )
 ```
+
+En los siguientes apartados extraeremos información del objeto `fit_newton` que acabamos de crear y que contiene el ajuste realizado por la función `nls()`{.R}.
 
 ## Coeficientes
 
@@ -84,16 +90,27 @@ Los coeficientes del ajuste son:
 coefficients(fit_newton)
 ```
 
-Redondeando los resultados a dos decimales, las  estimaciones obtenidas son 
-$$\hat{T_a} = 19.03,$$
-$$\hat{T_0}=104.98,$$
-y 
-$$\hat{k}=0.06,$$ 
+```{r, include=FALSE}
+coeff <- knitr::asis_output(.Last.value)
+hat_T_a <- coeff[1]
+hat_T_0 <- coeff[2]
+hat_k <- coeff[3]
+```
+
+
+Redondeando los resultados a dos decimales, las  estimaciones obtenidas son
+$$\hat{T_a} = `r round(hat_T_a, 2)`,$$
+$$\hat{T_0} = `r round(hat_T_0, 2)`,$$
+y
+$$\hat{k} = `r round(hat_k, 2)`,$$
 y el ajuste quedaría:
 
-$$T(t) = 19.03 + (104.98-19.03)e^{-0.06t}.$$
+$$T(t) = `r round(hat_T_a, 2)` + (`r round(hat_T_0, 2)` - `r round(hat_T_a, 2)`)e^{- `r round(hat_k, 2)` t}.$$
 
 ## Predicciones
+
+Podemos realizar predicciones de los valores de la variable dependiente con la función `predict()`{.R}, igual que en el caso lineal.
+
 
 Los pronósticos para las temperaturas a la que se encontrará la barra de hierro a los $70$, $80$ y $90$ minutos serían:
 
@@ -107,7 +124,7 @@ predict(
 
 ## Gráfico ajuste
 
-Como en el capítulo anterior usamos la función `geom_smooth()` para representar el ajuste:
+Como en el capítulo anterior usamos la función `geom_smooth()`{.R} para representar el ajuste:
 
 ```{r}
 ggplot(
@@ -117,7 +134,7 @@ ggplot(
     geom_point() +
     geom_smooth(
         method = "nls",
-        formula = y ~ T_model(x, T0, Ta, k),
+        formula = y ~ newton(x, T0, Ta, k),
         method.args = list(
             start = list(T0 = 100, Ta = 20, k = 0.05)
         ),
@@ -125,11 +142,11 @@ ggplot(
     )
 ```
 
-En los argumentos de `geom_smooth()` hemos escrito ahora `method = "nls"` para indicar que el ajuste se realiza con la función `nls()`.
+En los argumentos de `geom_smooth()`{.R} hemos escrito ahora `method = "nls"` para indicar que el ajuste se realiza con la función `nls()`{.R}.
 
-El argumento `start` que requiere la función `nls()` se especifica en `method.args = list(...)`.
+El argumento `start` que requiere la función `nls()`{.R} se especifica en `method.args = list(...)`{.R}.
 
-Notar que hemos usado nuestra función `T_model()` para especificar la fórmula del modelo, como al usar la función `nls()`,  pero que en este caso no se utilizan los nombres `time` y `temp` de las variables sino los nombres `x` e `y` de las correspondientes estéticas.
+Notar que hemos usado nuestra función `newton()`{.R} para especificar la fórmula del modelo, como al usar la función `nls()`{.R},  pero que en este caso no se utilizan los nombres `time` y `temp` de las variables sino los nombres `x` e `y` de las correspondientes estéticas.
 
 El argumento `se = FALSE` es necesario en este caso (si no lo incluyes obtendrás un error) por una cuestión técnica que no vamos a detallar.
 
@@ -149,3 +166,6 @@ ggplot(data = temperatures, mapping = aes(x = time, y = temp)) +
         }
     )
 ```
+
+
+

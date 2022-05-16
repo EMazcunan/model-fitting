@@ -23,16 +23,22 @@ knitr::opts_chunk$set(
     error = FALSE,
     results = "hold",
     #
-    # https://bookdown.org/yihui/rmarkdown-cookbook/opts-tidy.html
-    # tidy=TRUE,
-    # tidy.opts=list(width.cutoff=60)
-    #
     # Trick to be able to customize default output (see pre.egitbook-output in style.css)
     # Idea de:
     # https://stackoverflow.com/questions/65495605/in-r-bookdown-how-do-i-set-the-default-code-output-background-color
     class.output = "egitbook-output",
+    #
     # Truncar líneas en PDF
-    tidy = "styler"
+    tidy = "styler",
+    #
+    # Hacer que .Last.value funcione casi como en consola
+    # https://stackoverflow.com/questions/31475226/using-last-value-in-rmarkdown-knitr
+    knitr::opts_chunk$set(render = function(x, ...){
+        unlockBinding(".Last.value", .BaseNamespaceEnv)
+        assign(".Last.value", x, .BaseNamespaceEnv)
+        lockBinding(".Last.value", .BaseNamespaceEnv)
+        knitr::knit_print(x, ...)
+    })
 )
 
 # comment (salida)

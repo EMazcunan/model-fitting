@@ -608,8 +608,8 @@ Notar que al especificar la fórmula del modelo en el argumento \texttt{formula}
 
 El argumento \VERB|\NormalTok{se }\OtherTok{=} \ConstantTok{FALSE}| inhibe representar los intervalos de confianza (que estudiaremos en el último tema del curso).
 
-\hypertarget{nls-tbc}{%
-\section{Modelos no lineales}\label{nls-tbc}}
+\hypertarget{nls}{%
+\section{Modelos no lineales}\label{nls}}
 
 Modelos como
 \[y = \beta_1 \beta_2^{x}\]
@@ -622,8 +622,158 @@ Pero en el caso de modelos no lineales como los anteriores, la situación se com
 
 En este capítulo veremos cómo ajustar este tipo de modelos a una colección de observaciones, usando la función \VERB|\FunctionTok{nls}\NormalTok{()}| (\textbf{n}onlinear \textbf{l}east \textbf{s}quares) de \textsf{R}.
 
-\hypertarget{tbc}{%
-\subsection{Continuará \ldots{}}\label{tbc}}
+\hypertarget{planteamiento-del-problema-ley-de-enfriamiento-de-newton}{%
+\subsection{Planteamiento del problema: Ley de enfriamiento de Newton}\label{planteamiento-del-problema-ley-de-enfriamiento-de-newton}}
+
+La ley de enfriamiento de Newton establece que cuando un sólido a temperatura inicial \(T_0\) se deja enfriar en un ambiente de temperatura \(T_a\), su temperatura en función del tiempo \(t\) viene dada por
+\[T(t)=T_a+(T_0-T_a)e^{-kt}\]
+donde \(k\) es una constante que depende de la forma del sólido y del calor específico del material que lo componga.
+
+En un experimento se calentó una barra de hierro hasta una temperatura inicial de \(T_0\) y después se dejó enfriar en un ambiente a temperatura \(T_a\). Se midió la temperatura de la barra a intervalos de tiempo de \(1\) minuto, durante una hora. Los datos obtenidos se recogen en el archivo \href{https://drive.google.com/uc?export=download\&id=1mpF0_lZVw-u2SlrxJDwczEI4x_OxO1W2}{\texttt{temperatures.csv}}(click para descargar), que contiene las variables:
+
+\begin{itemize}
+\item
+  \texttt{time}: tiempo transcurrido, en minutos, desde el instante inicial (\(t=0\)).
+\item
+  \texttt{temp}: temperatura de la barra de hierro, en ºC.
+\end{itemize}
+
+Como antes, descarga el fichero \texttt{temperatures.csv} y guárdalo en la carpeta de nombre \texttt{data} dentro de tu directorio de trabajo. Importamos los datos con \VERB|\FunctionTok{read\_csv}\NormalTok{()}| y los guardamos en un objeto de nombre \texttt{temperatures}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temperatures }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/temperatures.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Visualizamos los datos dibujando la nube de puntos \((t, T)\) con \VERB|\FunctionTok{geom\_point}\NormalTok{()}|:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ temperatures,}
+  \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time, }\AttributeTok{y =}\NormalTok{ temp)}
+\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{fitting_files/figure-latex/unnamed-chunk-24-1} \end{center}
+
+\hypertarget{ajuste-con-nls}{%
+\subsection{\texorpdfstring{Ajuste con \texttt{nls()}}{Ajuste con nls()}}\label{ajuste-con-nls}}
+
+Antes de utilizar la función \VERB|\FunctionTok{nls}\NormalTok{()}| crearemos una función para la fórmula de la temperatura en nuestro modelo de la ley de Newton
+\[T(t)=T_a+(T_0-T_a)e^{-kt}\]
+que tiene como argumentos la variable independiente \(t\), y los tres parámetros \(T_0\), \(T_a\) y \(k\). La llamamos \texttt{newton}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{newton }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(t, Ta, T0, k) \{}
+\NormalTok{  Ta }\SpecialCharTok{+}\NormalTok{ (T0 }\SpecialCharTok{{-}}\NormalTok{ Ta) }\SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{k }\SpecialCharTok{*}\NormalTok{ t)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+También necesitamos proporcionar unos valores iniciales para los parámetros \(T_0\), \(T_a\) y \(k\). Estos valores iniciales ayudarán en el proceso de optimización del error cuadrático (que como hemos dicho antes, pasa por resolver un sistema de ecuaciones no lineales).
+
+A la vista de los datos tomaremos \(20\) como valor inicial para \(T_a\) y \(100\) como valor inicial para \(T_0\). Para el valor inicial de \(k\), tomamos \(0.05\). (En la tarea de evaluación se propondrán los valores iniciales para los correspondientes parámetros).
+
+Con los elementos anteriores, ya podemos utilizar la función \VERB|\FunctionTok{nls}\NormalTok{()}|. Utilizaremos la función \texttt{newton} que acabamos de definir para el valor del argumento \texttt{formula}, e indicaremos los valores iniciales de los parámetros en el argumento \texttt{start}, en forma de lista con la función \VERB|\FunctionTok{list}\NormalTok{()}|:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit\_newton }\OtherTok{\textless{}{-}} \FunctionTok{nls}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ temperatures,}
+  \AttributeTok{formula =}\NormalTok{ temp }\SpecialCharTok{\textasciitilde{}} \FunctionTok{newton}\NormalTok{(time, Ta, T0, k),}
+  \AttributeTok{start =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Ta =} \DecValTok{20}\NormalTok{, }\AttributeTok{T0 =} \DecValTok{100}\NormalTok{, }\AttributeTok{k =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+En los siguientes apartados extraeremos información del objeto \texttt{fit\_newton} que acabamos de crear y que contiene el ajuste realizado por la función \VERB|\FunctionTok{nls}\NormalTok{()}|.
+
+\hypertarget{coeficientes-1}{%
+\subsection{Coeficientes}\label{coeficientes-1}}
+
+Los coeficientes del ajuste son:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coefficients}\NormalTok{(fit\_newton)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#\#           Ta           T0            k }
+\NormalTok{\#\#  19.02958735 104.98070984   0.05994108}
+\end{Highlighting}
+\end{Shaded}
+
+Redondeando los resultados a dos decimales, las estimaciones obtenidas son
+\[\hat{T_a} = 19.03,\]
+\[\hat{T_0} = 104.98,\]
+y
+\[\hat{k} = 0.06,\]
+y el ajuste quedaría:
+
+\[T(t) = 19.03 + (104.98 - 19.03)e^{- 0.06 t}.\]
+
+\hypertarget{predicciones-1}{%
+\subsection{Predicciones}\label{predicciones-1}}
+
+Podemos realizar predicciones de los valores de la variable dependiente con la función \VERB|\FunctionTok{predict}\NormalTok{()}|, igual que en el caso lineal.
+
+Los pronósticos para las temperaturas a la que se encontrará la barra de hierro a los \(70\), \(80\) y \(90\) minutos serían:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(}
+\NormalTok{  fit\_newton,}
+  \FunctionTok{tibble}\NormalTok{(}\AttributeTok{time =} \FunctionTok{c}\NormalTok{(}\DecValTok{70}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{90}\NormalTok{))}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\#\# [1] 20.32380 19.74029 19.41986}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{gruxe1fico-ajuste}{%
+\subsection{Gráfico ajuste}\label{gruxe1fico-ajuste}}
+
+Como en el capítulo anterior usamos la función \VERB|\FunctionTok{geom\_smooth}\NormalTok{()}| para representar el ajuste:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ temperatures,}
+  \AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time, }\AttributeTok{y =}\NormalTok{ temp)}
+\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}
+    \AttributeTok{method =} \StringTok{"nls"}\NormalTok{,}
+    \AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}} \FunctionTok{newton}\NormalTok{(x, T0, Ta, k),}
+    \AttributeTok{method.args =} \FunctionTok{list}\NormalTok{(}
+      \AttributeTok{start =} \FunctionTok{list}\NormalTok{(}\AttributeTok{T0 =} \DecValTok{100}\NormalTok{, }\AttributeTok{Ta =} \DecValTok{20}\NormalTok{, }\AttributeTok{k =} \FloatTok{0.05}\NormalTok{)}
+\NormalTok{    ),}
+    \AttributeTok{se =} \ConstantTok{FALSE} \CommentTok{\# intervalo de confianza no implementado en predict.nls}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{fitting_files/figure-latex/unnamed-chunk-30-1} \end{center}
+
+En los argumentos de \VERB|\FunctionTok{geom\_smooth}\NormalTok{()}| hemos escrito ahora \texttt{method\ =\ "nls"} para indicar que el ajuste se realiza con la función \VERB|\FunctionTok{nls}\NormalTok{()}|.
+
+El argumento \texttt{start} que requiere la función \VERB|\FunctionTok{nls}\NormalTok{()}| se especifica en \VERB|\NormalTok{method.args }\OtherTok{=} \FunctionTok{list}\NormalTok{(...)}|.
+
+Notar que hemos usado nuestra función \VERB|\FunctionTok{newton}\NormalTok{()}| para especificar la fórmula del modelo, como al usar la función \VERB|\FunctionTok{nls}\NormalTok{()}|, pero que en este caso no se utilizan los nombres \texttt{time} y \texttt{temp} de las variables sino los nombres \texttt{x} e \texttt{y} de las correspondientes estéticas.
+
+El argumento \texttt{se\ =\ FALSE} es necesario en este caso (si no lo incluyes obtendrás un error) por una cuestión técnica que no vamos a detallar.
 
 \printbibliography
 

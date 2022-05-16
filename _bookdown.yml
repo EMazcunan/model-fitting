@@ -1,6 +1,6 @@
 rmd_files:
-    html: ["index.Rmd", "intro.Rmd", "packages.Rmd", "lm.Rmd", "tbc.Rmd"]
-    latex: ["index.Rmd", "intro.Rmd", "packages.Rmd", "lm.Rmd", "tbc.Rmd"]
+    html: ["index.Rmd", "intro.Rmd", "packages.Rmd", "lm.Rmd", "nls.Rmd"]
+    latex: ["index.Rmd", "intro.Rmd", "packages.Rmd", "lm.Rmd", "nls.Rmd"]
 book_filename: "fitting"
 output_dir: "docs" # Para GitHub (por defecto es _book)
 delete_merged_file: true
