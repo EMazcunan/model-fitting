@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 Fórmulas en R | Ajuste de datos con R</title>
-  <meta name="description" content="2.3 Fórmulas en R | Ajuste de datos con R" />
+  <title>3.1 Planteamiento del problema: Ley de enfriamiento de Newton | Ajuste de datos con R</title>
+  <meta name="description" content="3.1 Planteamiento del problema: Ley de enfriamiento de Newton | Ajuste de datos con R" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 Fórmulas en R | Ajuste de datos con R" />
+  <meta property="og:title" content="3.1 Planteamiento del problema: Ley de enfriamiento de Newton | Ajuste de datos con R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="EMazcunan/model-fitting" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 Fórmulas en R | Ajuste de datos con R" />
+  <meta name="twitter:title" content="3.1 Planteamiento del problema: Ley de enfriamiento de Newton | Ajuste de datos con R" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ajuste-con-lm.html"/>
-<link rel="next" href="coeficientes.html"/>
+<link rel="prev" href="nls.html"/>
+<link rel="next" href="newton-fit.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -172,22 +172,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1</b> Paquetes</a></li>
 <li class="chapter" data-level="2" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>2</b> Modelos lineales</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="planteamiento-del-problema-el-prisma-de-vidrio.html"><a href="planteamiento-del-problema-el-prisma-de-vidrio.html"><i class="fa fa-check"></i><b>2.1</b> Planteamiento del problema: El prisma de vidrio</a></li>
-<li class="chapter" data-level="2.2" data-path="ajuste-con-lm.html"><a href="ajuste-con-lm.html"><i class="fa fa-check"></i><b>2.2</b> Ajuste con <code>lm()</code></a></li>
-<li class="chapter" data-level="2.3" data-path="fórmulas-en-r.html"><a href="fórmulas-en-r.html"><i class="fa fa-check"></i><b>2.3</b> Fórmulas en R</a></li>
-<li class="chapter" data-level="2.4" data-path="coeficientes.html"><a href="coeficientes.html"><i class="fa fa-check"></i><b>2.4</b> Coeficientes</a></li>
-<li class="chapter" data-level="2.5" data-path="valores-ajustados.html"><a href="valores-ajustados.html"><i class="fa fa-check"></i><b>2.5</b> Valores ajustados</a></li>
-<li class="chapter" data-level="2.6" data-path="residuos.html"><a href="residuos.html"><i class="fa fa-check"></i><b>2.6</b> Residuos</a></li>
-<li class="chapter" data-level="2.7" data-path="predicciones.html"><a href="predicciones.html"><i class="fa fa-check"></i><b>2.7</b> Predicciones</a></li>
-<li class="chapter" data-level="2.8" data-path="gráfico-del-ajuste.html"><a href="gráfico-del-ajuste.html"><i class="fa fa-check"></i><b>2.8</b> Gráfico del ajuste</a></li>
+<li class="chapter" data-level="2.1" data-path="cauchy.html"><a href="cauchy.html"><i class="fa fa-check"></i><b>2.1</b> Planteamiento del problema: El prisma de vidrio</a></li>
+<li class="chapter" data-level="2.2" data-path="cauchy-fit.html"><a href="cauchy-fit.html"><i class="fa fa-check"></i><b>2.2</b> Ajuste con <code>lm()</code></a></li>
+<li class="chapter" data-level="2.3" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>2.3</b> Fórmulas en R</a></li>
+<li class="chapter" data-level="2.4" data-path="cauchy-coefficientes.html"><a href="cauchy-coefficientes.html"><i class="fa fa-check"></i><b>2.4</b> Coeficientes</a></li>
+<li class="chapter" data-level="2.5" data-path="cauchy-fitted.html"><a href="cauchy-fitted.html"><i class="fa fa-check"></i><b>2.5</b> Valores ajustados</a></li>
+<li class="chapter" data-level="2.6" data-path="cauchy-residuals.html"><a href="cauchy-residuals.html"><i class="fa fa-check"></i><b>2.6</b> Residuos</a></li>
+<li class="chapter" data-level="2.7" data-path="cauchy-predict.html"><a href="cauchy-predict.html"><i class="fa fa-check"></i><b>2.7</b> Predicciones</a></li>
+<li class="chapter" data-level="2.8" data-path="cauchy-smooth.html"><a href="cauchy-smooth.html"><i class="fa fa-check"></i><b>2.8</b> Gráfico del ajuste</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="nls.html"><a href="nls.html"><i class="fa fa-check"></i><b>3</b> Modelos no lineales</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="planteamiento-del-problema-ley-de-enfriamiento-de-newton.html"><a href="planteamiento-del-problema-ley-de-enfriamiento-de-newton.html"><i class="fa fa-check"></i><b>3.1</b> Planteamiento del problema: Ley de enfriamiento de Newton</a></li>
-<li class="chapter" data-level="3.2" data-path="ajuste-con-nls.html"><a href="ajuste-con-nls.html"><i class="fa fa-check"></i><b>3.2</b> Ajuste con <code>nls()</code></a></li>
-<li class="chapter" data-level="3.3" data-path="coeficientes-1.html"><a href="coeficientes-1.html"><i class="fa fa-check"></i><b>3.3</b> Coeficientes</a></li>
-<li class="chapter" data-level="3.4" data-path="predicciones-1.html"><a href="predicciones-1.html"><i class="fa fa-check"></i><b>3.4</b> Predicciones</a></li>
-<li class="chapter" data-level="3.5" data-path="gráfico-ajuste.html"><a href="gráfico-ajuste.html"><i class="fa fa-check"></i><b>3.5</b> Gráfico ajuste</a></li>
+<li class="chapter" data-level="3.1" data-path="newton.html"><a href="newton.html"><i class="fa fa-check"></i><b>3.1</b> Planteamiento del problema: Ley de enfriamiento de Newton</a></li>
+<li class="chapter" data-level="3.2" data-path="newton-fit.html"><a href="newton-fit.html"><i class="fa fa-check"></i><b>3.2</b> Ajuste con <code>nls()</code></a></li>
+<li class="chapter" data-level="3.3" data-path="newton-coefficients.html"><a href="newton-coefficients.html"><i class="fa fa-check"></i><b>3.3</b> Coeficientes</a></li>
+<li class="chapter" data-level="3.4" data-path="newton-predict.html"><a href="newton-predict.html"><i class="fa fa-check"></i><b>3.4</b> Predicciones</a></li>
+<li class="chapter" data-level="3.5" data-path="newton-smooth.html"><a href="newton-smooth.html"><i class="fa fa-check"></i><b>3.5</b> Gráfico ajuste</a></li>
 </ul></li>
 <li class="divider"></li>
 </ul>
@@ -215,47 +215,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 
-<div id="fórmulas-en-r" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Fórmulas en R<a href="fórmulas-en-r.html#fórmulas-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Al usar la función <code class="sourceCode r"><span class="fu">lm</span>()</code>, hemos indicado el siguiente valor para el argumento <code>formula</code> :</p>
-<div class="center">
-<p><code>n ~ I(1/lambda^2) + I(1/lambda^4)</code></p>
-</div>
-<p>La expresión anterior es un objeto de <span class="textsf">R</span> de tipo <code>formula</code>, que se corresponde con la fórmula de Cauchy que estamos usando como módelo</p>
-<p><span class="math display">\[n(\lambda) = \beta_1 + \frac{\beta_2}{\lambda^2} + \frac{\beta_3}{\lambda^4}.\]</span></p>
-<p>En la siguiente tabla se muestran algunos ejemplos más de fórmulas en <span class="textsf">R</span> correspondientes a diferentes modelos:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="center">Modelo</th>
-<th align="center"><code>formula</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><span class="math inline">\(y=\beta_1+\beta_2x\)</span></td>
-<td align="center"><code>y ~ x</code></td>
-</tr>
-<tr class="even">
-<td align="center"><span class="math inline">\(y=\beta_1 x\)</span></td>
-<td align="center"><code>y ~ 0 + x</code></td>
-</tr>
-<tr class="odd">
-<td align="center"><span class="math inline">\(y=\beta_1 + \beta_2 x + \beta_3 x^2\)</span></td>
-<td align="center"><code>y ~ x + I(x^2)</code></td>
-</tr>
-<tr class="even">
-<td align="center"><span class="math inline">\(y=\beta_1 \cos(x)+ \beta_2\sin(x)\)</span></td>
-<td align="center"><code>y ~ 0 + I(cos(x)) + I(sin(x))</code></td>
-</tr>
-</tbody>
-</table>
-<p>Para especificar la fórmula de un modelo en <span class="textsf">R</span> hay que tener en cuenta las siguientes reglas:</p>
+<div id="newton" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Planteamiento del problema: Ley de enfriamiento de Newton<a href="newton.html#newton" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La ley de enfriamiento de Newton establece que cuando un sólido a temperatura inicial <span class="math inline">\(T_0\)</span> se deja enfriar en un ambiente de temperatura <span class="math inline">\(T_a\)</span>, su temperatura en función del tiempo <span class="math inline">\(t\)</span> viene dada por
+<span class="math display">\[T(t)=T_a+(T_0-T_a)e^{-kt}\]</span>
+donde <span class="math inline">\(k\)</span> es una constante que depende de la forma del sólido y del calor específico del material que lo componga.</p>
+<p>En un experimento se calentó una barra de hierro hasta una temperatura inicial de <span class="math inline">\(T_0\)</span> y después se dejó enfriar en un ambiente a temperatura <span class="math inline">\(T_a\)</span>. Se midió la temperatura de la barra a intervalos de tiempo de <span class="math inline">\(1\)</span> minuto, durante una hora. Los datos obtenidos se recogen en el archivo <a href="https://drive.google.com/uc?export=download&amp;id=1mpF0_lZVw-u2SlrxJDwczEI4x_OxO1W2"><code>temperatures.csv</code></a>(click para descargar), que contiene las variables:</p>
 <ul>
-<li><p>Cada sumando en una fórmula de <span class="textsf">R</span>, indica la función que multiplica a un parámetro em la fórmula del modelo. Así, el sumando <code>x</code> en una fórmula de <span class="textsf">R</span> será un sumando de la forma <span class="math inline">\(\beta_ix\)</span> en la fórmula matemática del modelo.</p></li>
-<li><p><span class="textsf">R</span> añade siempre una constante como primer sumando de la fórmula del modelo (<span class="math inline">\(\beta_1\)</span> en los ejemplos anteriores). Para evitar la inclusión automática de esa constante hay que escribir el sumando <code>0</code>. Así, la fórmula <code>y ~ x</code> se corresponde con <span class="math inline">\(y = \beta_1 + \beta_2x\)</span>; y si se quiere omitir la constante <span class="math inline">\(\beta_1\)</span>, se ha de escribir <code>y ~ 0 + x</code>.</p></li>
-<li><p>Las funciones que son una transformación de la variable independiente se han de escribir incluidas en la función identidad <code>I()</code>. Por ejemplo, un término de la forma <span class="math inline">\(\beta_i x^2\)</span> en la fórmula de un modelo se escribe en <span class="textsf">R</span> como <code>I(x^2)</code>.</p></li>
+<li><p><code>time</code>: tiempo transcurrido, en minutos, desde el instante inicial (<span class="math inline">\(t=0\)</span>).</p></li>
+<li><p><code>temp</code>: temperatura de la barra de hierro, en ºC.</p></li>
 </ul>
+<p>Como antes, descarga el fichero <code>temperatures.csv</code> y guárdalo en la carpeta de nombre <code>data</code> dentro de tu directorio de trabajo. Importamos los datos con <code class="sourceCode r"><span class="fu">read_csv</span>()</code> y los guardamos en un objeto de nombre <code>temperatures</code>:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="newton.html#cb24-1" aria-hidden="true" tabindex="-1"></a>temperatures <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/temperatures.csv&quot;</span>)</span></code></pre></div>
+<p>Visualizamos los datos dibujando la nube de puntos <span class="math inline">\((t, T)\)</span> con <code class="sourceCode r"><span class="fu">geom_point</span>()</code>:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="newton.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb25-2"><a href="newton.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> temperatures,</span>
+<span id="cb25-3"><a href="newton.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temp)</span>
+<span id="cb25-4"><a href="newton.html#cb25-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="newton.html#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="fitting_files/figure-html/unnamed-chunk-24-1.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
 
             </section>
@@ -263,8 +241,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="ajuste-con-lm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="coeficientes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="nls.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="newton-fit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

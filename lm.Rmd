@@ -12,7 +12,7 @@ En este capítulo veremos  cómo ajustar este tipo de modelos para un conjunto o
 
 Veremos también cómo representar gráficamente un ajuste usando la función `geom_smooth()`{.R} del paquete `ggplot2`.
 
-## Planteamiento del problema: El prisma de vidrio
+## Planteamiento del problema: El prisma de vidrio {#cauchy}
 
 ```{r, include = FALSE, eval=FALSE}
 # Generar datos
@@ -58,7 +58,7 @@ ggplot(
 ```
 
 
-## Ajuste con `lm()`
+## Ajuste con `lm()` {#cauchy-fit}
 
 Tomaremos como modelo la fórmula de Cauchy para los índices de refracción $n$ en la región visible del espectro de longitud de onda $\lambda$:
 $$n(\lambda) = \beta_1 + \frac{\beta_2}{\lambda^2} + \frac{\beta_3}{\lambda^4}$$
@@ -92,7 +92,7 @@ summary(fit_cauchy)
 ```
 Ésta es la razón por la que hemos creado el objeto `fit_cauchy` para almacenar la salida de la función `lm()`{.R}: lo  usaremos en los siguientes apartados para extraer información del ajuste realizado.
 
-## Fórmulas en R
+## Fórmulas en R {#formulas}
 
 Al usar la función `lm()`{.R}, hemos indicado el siguiente valor para el argumento `formula` :
 
@@ -125,7 +125,7 @@ Para especificar la fórmula de un modelo en `r R()` hay que tener en cuenta las
 * Las funciones que son una transformación de la variable independiente se han de escribir incluidas en la función identidad `I()`. Por ejemplo, un término de la forma $\beta_i x^2$ en la fórmula de un modelo se escribe en `r R()` como `I(x^2)`.
 
 
-## Coeficientes
+## Coeficientes {#cauchy-coefficientes}
 
 Para obtener los coeficientes del ajuste usamos la función `coefficients()`{.R}:
 
@@ -154,7 +154,7 @@ summary(fit_cauchy)$coefficients[2, ]
 Por tanto el ajuste buscado es 
 $$n(\lambda) = 1.50031 + \frac{4908.268}{\lambda^2} + \frac{7078042}{\lambda^4}.$$
 
-## Valores ajustados
+## Valores ajustados {#cauchy-fitted}
 
 Los valores ajustados (o esperados) para la variable dependiente se obtienen con la función `fitted()`{.R}:
 
@@ -167,7 +167,7 @@ fit_cauchy$fitted.values
 predict(fit_cauchy)
 ```
 
-## Residuos
+## Residuos {#cauchy-residuals}
 
 Para obtener los residuos del ajuste ($\varepsilon_i$) usamos la función `residuals()`{.R}:
 
@@ -207,7 +207,7 @@ El valor $38$, se llama grados de libertad de los residuos y se obtiene de resta
 df.residual(fit_cauchy) * sigma(fit_cauchy)^2 # RSS
 ```
 
-## Predicciones
+## Predicciones {#cauchy-predict}
 
 La siguiente tabla recoge las longitudes de onda correspondientes a algunos colores del arcoiris:
 
@@ -235,7 +235,7 @@ predict(
 
 En la función `predict()`{.R} indicamos como primer argumento nuestro ajuste `fit_cauchy` y como segundo argumento una hoja de datos, que hemos llamado `new_lambda`, con los nuevos valores para la variable independiente `lambda`. Hemos construido dicha hoja de datos con la función `tibble()`{.R} (*tidy table*).  
 
-## Gráfico del ajuste
+## Gráfico del ajuste {#cauchy-smooth}
 
 Al comienzo del problema representamos la nube de puntos de nuestras observaciones con la función `geom_point()`{.R}. Añadimos ahora el gráfico del ajuste con la función `geom_smooth()`{.R}:
 

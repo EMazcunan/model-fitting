@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.6 Residuos | Ajuste de datos con R</title>
-  <meta name="description" content="2.6 Residuos | Ajuste de datos con R" />
+  <title>3.3 Coeficientes | Ajuste de datos con R</title>
+  <meta name="description" content="3.3 Coeficientes | Ajuste de datos con R" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.6 Residuos | Ajuste de datos con R" />
+  <meta property="og:title" content="3.3 Coeficientes | Ajuste de datos con R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="EMazcunan/model-fitting" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.6 Residuos | Ajuste de datos con R" />
+  <meta name="twitter:title" content="3.3 Coeficientes | Ajuste de datos con R" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="valores-ajustados.html"/>
-<link rel="next" href="predicciones.html"/>
+<link rel="prev" href="newton-fit.html"/>
+<link rel="next" href="newton-predict.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -172,22 +172,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1</b> Paquetes</a></li>
 <li class="chapter" data-level="2" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>2</b> Modelos lineales</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="planteamiento-del-problema-el-prisma-de-vidrio.html"><a href="planteamiento-del-problema-el-prisma-de-vidrio.html"><i class="fa fa-check"></i><b>2.1</b> Planteamiento del problema: El prisma de vidrio</a></li>
-<li class="chapter" data-level="2.2" data-path="ajuste-con-lm.html"><a href="ajuste-con-lm.html"><i class="fa fa-check"></i><b>2.2</b> Ajuste con <code>lm()</code></a></li>
-<li class="chapter" data-level="2.3" data-path="fórmulas-en-r.html"><a href="fórmulas-en-r.html"><i class="fa fa-check"></i><b>2.3</b> Fórmulas en R</a></li>
-<li class="chapter" data-level="2.4" data-path="coeficientes.html"><a href="coeficientes.html"><i class="fa fa-check"></i><b>2.4</b> Coeficientes</a></li>
-<li class="chapter" data-level="2.5" data-path="valores-ajustados.html"><a href="valores-ajustados.html"><i class="fa fa-check"></i><b>2.5</b> Valores ajustados</a></li>
-<li class="chapter" data-level="2.6" data-path="residuos.html"><a href="residuos.html"><i class="fa fa-check"></i><b>2.6</b> Residuos</a></li>
-<li class="chapter" data-level="2.7" data-path="predicciones.html"><a href="predicciones.html"><i class="fa fa-check"></i><b>2.7</b> Predicciones</a></li>
-<li class="chapter" data-level="2.8" data-path="gráfico-del-ajuste.html"><a href="gráfico-del-ajuste.html"><i class="fa fa-check"></i><b>2.8</b> Gráfico del ajuste</a></li>
+<li class="chapter" data-level="2.1" data-path="cauchy.html"><a href="cauchy.html"><i class="fa fa-check"></i><b>2.1</b> Planteamiento del problema: El prisma de vidrio</a></li>
+<li class="chapter" data-level="2.2" data-path="cauchy-fit.html"><a href="cauchy-fit.html"><i class="fa fa-check"></i><b>2.2</b> Ajuste con <code>lm()</code></a></li>
+<li class="chapter" data-level="2.3" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>2.3</b> Fórmulas en R</a></li>
+<li class="chapter" data-level="2.4" data-path="cauchy-coefficientes.html"><a href="cauchy-coefficientes.html"><i class="fa fa-check"></i><b>2.4</b> Coeficientes</a></li>
+<li class="chapter" data-level="2.5" data-path="cauchy-fitted.html"><a href="cauchy-fitted.html"><i class="fa fa-check"></i><b>2.5</b> Valores ajustados</a></li>
+<li class="chapter" data-level="2.6" data-path="cauchy-residuals.html"><a href="cauchy-residuals.html"><i class="fa fa-check"></i><b>2.6</b> Residuos</a></li>
+<li class="chapter" data-level="2.7" data-path="cauchy-predict.html"><a href="cauchy-predict.html"><i class="fa fa-check"></i><b>2.7</b> Predicciones</a></li>
+<li class="chapter" data-level="2.8" data-path="cauchy-smooth.html"><a href="cauchy-smooth.html"><i class="fa fa-check"></i><b>2.8</b> Gráfico del ajuste</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="nls.html"><a href="nls.html"><i class="fa fa-check"></i><b>3</b> Modelos no lineales</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="planteamiento-del-problema-ley-de-enfriamiento-de-newton.html"><a href="planteamiento-del-problema-ley-de-enfriamiento-de-newton.html"><i class="fa fa-check"></i><b>3.1</b> Planteamiento del problema: Ley de enfriamiento de Newton</a></li>
-<li class="chapter" data-level="3.2" data-path="ajuste-con-nls.html"><a href="ajuste-con-nls.html"><i class="fa fa-check"></i><b>3.2</b> Ajuste con <code>nls()</code></a></li>
-<li class="chapter" data-level="3.3" data-path="coeficientes-1.html"><a href="coeficientes-1.html"><i class="fa fa-check"></i><b>3.3</b> Coeficientes</a></li>
-<li class="chapter" data-level="3.4" data-path="predicciones-1.html"><a href="predicciones-1.html"><i class="fa fa-check"></i><b>3.4</b> Predicciones</a></li>
-<li class="chapter" data-level="3.5" data-path="gráfico-ajuste.html"><a href="gráfico-ajuste.html"><i class="fa fa-check"></i><b>3.5</b> Gráfico ajuste</a></li>
+<li class="chapter" data-level="3.1" data-path="newton.html"><a href="newton.html"><i class="fa fa-check"></i><b>3.1</b> Planteamiento del problema: Ley de enfriamiento de Newton</a></li>
+<li class="chapter" data-level="3.2" data-path="newton-fit.html"><a href="newton-fit.html"><i class="fa fa-check"></i><b>3.2</b> Ajuste con <code>nls()</code></a></li>
+<li class="chapter" data-level="3.3" data-path="newton-coefficients.html"><a href="newton-coefficients.html"><i class="fa fa-check"></i><b>3.3</b> Coeficientes</a></li>
+<li class="chapter" data-level="3.4" data-path="newton-predict.html"><a href="newton-predict.html"><i class="fa fa-check"></i><b>3.4</b> Predicciones</a></li>
+<li class="chapter" data-level="3.5" data-path="newton-smooth.html"><a href="newton-smooth.html"><i class="fa fa-check"></i><b>3.5</b> Gráfico ajuste</a></li>
 </ul></li>
 <li class="divider"></li>
 </ul>
@@ -215,45 +215,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 
-<div id="residuos" class="section level2 hasAnchor" number="2.6">
-<h2><span class="header-section-number">2.6</span> Residuos<a href="residuos.html#residuos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Para obtener los residuos del ajuste (<span class="math inline">\(\varepsilon_i\)</span>) usamos la función <code class="sourceCode r"><span class="fu">residuals</span>()</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="residuos.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(fit_cauchy)</span></code></pre></div>
-<pre class="egitbook-output"><code>            1             2             3             4             5 
--5.158258e-04  1.192086e-04 -9.157603e-05  8.724810e-04  9.998852e-05 
-            6             7             8             9            10 
- 2.981569e-04 -6.063847e-04  6.853349e-04 -8.594240e-04 -3.992586e-04 
-           11            12            13            14            15 
- 4.507231e-05  4.592263e-05 -2.575917e-04  6.782515e-04  5.616847e-05 
-           16            17            18            19            20 
--1.021129e-04 -4.671765e-04  4.270844e-04 -1.002945e-03  2.215907e-03 
-           21            22            23            24            25 
--5.376294e-04  6.594862e-04  1.524706e-04  6.591191e-04 -9.333365e-04 
-           26            27            28            29            30 
--5.619564e-04 -8.481528e-04  9.871010e-05 -1.294146e-03  1.065956e-04 
-           31            32            33            34            35 
--2.355407e-04  1.609116e-03 -2.899098e-04 -2.667854e-04 -8.491117e-04 
-           36            37            38            39            40 
--3.842938e-04  1.710620e-05  2.483173e-04  8.932864e-04  7.950677e-04 
-           41 
--2.796932e-04 </code></pre>
-<p>Para calcular el error cuadrático del ajuste (<span class="math inline">\(RSS\)</span>) usamos</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="residuos.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">residuals</span>(fit_cauchy)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
-<pre class="egitbook-output"><code>[1] 1.976785e-05</code></pre>
-<p>En el resumen del ajuste podemos leer</p>
-<div class="center">
-<p><code>Residual standard error: 0.0007213 on 38 degrees of freedom</code></p>
-</div>
-<p>El error estandard residual, que suele denotarse <span class="math inline">\(\sigma\)</span>, se obtiene con la función <code class="sourceCode r"><span class="fu">sigma</span>()</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="residuos.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sigma</span>(fit_cauchy)</span></code></pre></div>
-<pre class="egitbook-output"><code>[1] 0.0007212534</code></pre>
-<p>La relación entre esta cantidad <span class="math inline">\(\sigma\)</span> y el error cuadrático <span class="math inline">\(RSS\)</span> es:
-<span class="math display">\[\sigma = \sqrt{RSS/38}\]</span>
-o equivalentemente
-<span class="math display">\[RSS=38\sigma^2.\]</span>
-El valor <span class="math inline">\(38\)</span>, se llama grados de libertad de los residuos y se obtiene de restar, a las <span class="math inline">\(n=41\)</span> observaciones, los <span class="math inline">\(p=3\)</span> parámetros del modelo. Se obtiene con la función <code class="sourceCode r"><span class="fu">df.residual</span>()</code>. Comprobamos la relación entre el error residual estandar y <span class="math inline">\(RSS\)</span>:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="residuos.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(fit_cauchy) <span class="sc">*</span> <span class="fu">sigma</span>(fit_cauchy)<span class="sc">^</span><span class="dv">2</span> <span class="co"># RSS</span></span></code></pre></div>
-<pre class="egitbook-output"><code>[1] 1.976785e-05</code></pre>
+<div id="newton-coefficients" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Coeficientes<a href="newton-coefficients.html#newton-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los coeficientes del ajuste son:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="newton-coefficients.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(fit_newton)</span></code></pre></div>
+<pre class="egitbook-output"><code>          Ta           T0            k 
+ 19.02958735 104.98070984   0.05994108 </code></pre>
+<p>Redondeando los resultados a dos decimales, las estimaciones obtenidas son
+<span class="math display">\[\hat{T_a} = 19.03,\]</span>
+<span class="math display">\[\hat{T_0} = 104.98,\]</span>
+y
+<span class="math display">\[\hat{k} = 0.06,\]</span>
+y el ajuste quedaría:</p>
+<p><span class="math display">\[T(t) = 19.03 + (104.98 - 19.03)e^{- 0.06 t}.\]</span></p>
 </div>
 
             </section>
@@ -261,8 +235,8 @@ El valor <span class="math inline">\(38\)</span>, se llama grados de libertad de
           </div>
         </div>
       </div>
-<a href="valores-ajustados.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="predicciones.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="newton-fit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="newton-predict.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

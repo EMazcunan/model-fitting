@@ -11,7 +11,7 @@ Pero en el caso de modelos no lineales como los anteriores, la situación se com
 
 En este capítulo veremos  cómo ajustar este tipo de modelos a una colección de  observaciones, usando la función `nls()`{.R} (**n**onlinear  **l**east **s**quares) de `r R()`.
 
-## Planteamiento del problema: Ley de enfriamiento de Newton
+## Planteamiento del problema: Ley de enfriamiento de Newton {#newton}
 
 ```{r, include = FALSE, eval=FALSE}
 # Generar datos
@@ -55,7 +55,7 @@ ggplot(
     geom_point()
 ```
 
-## Ajuste con `nls()`
+## Ajuste con `nls()` {#newton-fit}
 
 Antes de utilizar la función `nls()`{.R} crearemos una función para la fórmula de la temperatura en nuestro modelo de la ley de Newton
 $$T(t)=T_a+(T_0-T_a)e^{-kt}$$
@@ -83,7 +83,7 @@ fit_newton <- nls(
 
 En los siguientes apartados extraeremos información del objeto `fit_newton` que acabamos de crear y que contiene el ajuste realizado por la función `nls()`{.R}.
 
-## Coeficientes
+## Coeficientes {#newton-coefficients}
 
 Los coeficientes del ajuste son:
 ```{r}
@@ -107,7 +107,7 @@ y el ajuste quedaría:
 
 $$T(t) = `r round(hat_T_a, 2)` + (`r round(hat_T_0, 2)` - `r round(hat_T_a, 2)`)e^{- `r round(hat_k, 2)` t}.$$
 
-## Predicciones
+## Predicciones {#newton-predict}
 
 Podemos realizar predicciones de los valores de la variable dependiente con la función `predict()`{.R}, igual que en el caso lineal.
 
@@ -122,7 +122,7 @@ predict(
 ```
 
 
-## Gráfico ajuste
+## Gráfico ajuste {#newton-smooth}
 
 Como en el capítulo anterior usamos la función `geom_smooth()`{.R} para representar el ajuste:
 
@@ -158,6 +158,9 @@ ggplot(data = temperatures, mapping = aes(x = time)) +
         mapping = aes(y = fitted(fit_newton))
     )
 # Con `geom_function`
+# Provoca warning
+# Warning: Computation failed in `stat_function()`:
+# Elements must equal the number of rows or 1
 ggplot(data = temperatures, mapping = aes(x = time, y = temp)) +
     geom_point() +
     geom_function(

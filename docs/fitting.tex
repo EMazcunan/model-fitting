@@ -244,8 +244,8 @@ En este capítulo veremos cómo ajustar este tipo de modelos para un conjunto ob
 
 Veremos también cómo representar gráficamente un ajuste usando la función \VERB|\FunctionTok{geom\_smooth}\NormalTok{()}| del paquete \texttt{ggplot2}.
 
-\hypertarget{planteamiento-del-problema-el-prisma-de-vidrio}{%
-\subsection{Planteamiento del problema: El prisma de vidrio}\label{planteamiento-del-problema-el-prisma-de-vidrio}}
+\hypertarget{cauchy}{%
+\subsection{Planteamiento del problema: El prisma de vidrio}\label{cauchy}}
 
 Newton demostró con el prisma que la luz blanca es una mezcla de varios colores y que la refracción depende del color (longitud de onda).
 
@@ -284,8 +284,8 @@ Visualizamos los datos dibujando la nube de puntos \((\lambda, n)\) con \VERB|\F
 
 \begin{center}\includegraphics[width=1\linewidth]{fitting_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
-\hypertarget{ajuste-con-lm}{%
-\subsection{\texorpdfstring{Ajuste con \texttt{lm()}}{Ajuste con lm()}}\label{ajuste-con-lm}}
+\hypertarget{cauchy-fit}{%
+\subsection{\texorpdfstring{Ajuste con \texttt{lm()}}{Ajuste con lm()}}\label{cauchy-fit}}
 
 Tomaremos como modelo la fórmula de Cauchy para los índices de refracción \(n\) en la región visible del espectro de longitud de onda \(\lambda\):
 \[n(\lambda) = \beta_1 + \frac{\beta_2}{\lambda^2} + \frac{\beta_3}{\lambda^4}\]
@@ -360,8 +360,8 @@ La instrucción \VERB|\FunctionTok{summary}\NormalTok{(fit\_cauchy)}| revela que
 
 Ésta es la razón por la que hemos creado el objeto \texttt{fit\_cauchy} para almacenar la salida de la función \VERB|\FunctionTok{lm}\NormalTok{()}|: lo usaremos en los siguientes apartados para extraer información del ajuste realizado.
 
-\hypertarget{fuxf3rmulas-en-r}{%
-\subsection{Fórmulas en R}\label{fuxf3rmulas-en-r}}
+\hypertarget{formulas}{%
+\subsection{Fórmulas en R}\label{formulas}}
 
 Al usar la función \VERB|\FunctionTok{lm}\NormalTok{()}|, hemos indicado el siguiente valor para el argumento \texttt{formula} :
 
@@ -396,8 +396,8 @@ Para especificar la fórmula de un modelo en \textsf{R} hay que tener en cuenta 
   Las funciones que son una transformación de la variable independiente se han de escribir incluidas en la función identidad \texttt{I()}. Por ejemplo, un término de la forma \(\beta_i x^2\) en la fórmula de un modelo se escribe en \textsf{R} como \texttt{I(x\^{}2)}.
 \end{itemize}
 
-\hypertarget{coeficientes}{%
-\subsection{Coeficientes}\label{coeficientes}}
+\hypertarget{cauchy-coefficientes}{%
+\subsection{Coeficientes}\label{cauchy-coefficientes}}
 
 Para obtener los coeficientes del ajuste usamos la función \VERB|\FunctionTok{coefficients}\NormalTok{()}|:
 
@@ -425,8 +425,8 @@ y
 Por tanto el ajuste buscado es
 \[n(\lambda) = 1.50031 + \frac{4908.268}{\lambda^2} + \frac{7078042}{\lambda^4}.\]
 
-\hypertarget{valores-ajustados}{%
-\subsection{Valores ajustados}\label{valores-ajustados}}
+\hypertarget{cauchy-fitted}{%
+\subsection{Valores ajustados}\label{cauchy-fitted}}
 
 Los valores ajustados (o esperados) para la variable dependiente se obtienen con la función \VERB|\FunctionTok{fitted}\NormalTok{()}|:
 
@@ -453,8 +453,8 @@ Los valores ajustados (o esperados) para la variable dependiente se obtienen con
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{residuos}{%
-\subsection{Residuos}\label{residuos}}
+\hypertarget{cauchy-residuals}{%
+\subsection{Residuos}\label{cauchy-residuals}}
 
 Para obtener los residuos del ajuste (\(\varepsilon_i\)) usamos la función \VERB|\FunctionTok{residuals}\NormalTok{()}|:
 
@@ -537,8 +537,8 @@ El valor \(38\), se llama grados de libertad de los residuos y se obtiene de res
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{predicciones}{%
-\subsection{Predicciones}\label{predicciones}}
+\hypertarget{cauchy-predict}{%
+\subsection{Predicciones}\label{cauchy-predict}}
 
 La siguiente tabla recoge las longitudes de onda correspondientes a algunos colores del arcoiris:
 
@@ -580,8 +580,8 @@ Queremos calcular los índices de refracción que predice nuestro ajuste para lo
 
 En la función \VERB|\FunctionTok{predict}\NormalTok{()}| indicamos como primer argumento nuestro ajuste \texttt{fit\_cauchy} y como segundo argumento una hoja de datos, que hemos llamado \texttt{new\_lambda}, con los nuevos valores para la variable independiente \texttt{lambda}. Hemos construido dicha hoja de datos con la función \VERB|\FunctionTok{tibble}\NormalTok{()}| (\emph{tidy table}).
 
-\hypertarget{gruxe1fico-del-ajuste}{%
-\subsection{Gráfico del ajuste}\label{gruxe1fico-del-ajuste}}
+\hypertarget{cauchy-smooth}{%
+\subsection{Gráfico del ajuste}\label{cauchy-smooth}}
 
 Al comienzo del problema representamos la nube de puntos de nuestras observaciones con la función \VERB|\FunctionTok{geom\_point}\NormalTok{()}|. Añadimos ahora el gráfico del ajuste con la función \VERB|\FunctionTok{geom\_smooth}\NormalTok{()}|:
 
@@ -622,8 +622,8 @@ Pero en el caso de modelos no lineales como los anteriores, la situación se com
 
 En este capítulo veremos cómo ajustar este tipo de modelos a una colección de observaciones, usando la función \VERB|\FunctionTok{nls}\NormalTok{()}| (\textbf{n}onlinear \textbf{l}east \textbf{s}quares) de \textsf{R}.
 
-\hypertarget{planteamiento-del-problema-ley-de-enfriamiento-de-newton}{%
-\subsection{Planteamiento del problema: Ley de enfriamiento de Newton}\label{planteamiento-del-problema-ley-de-enfriamiento-de-newton}}
+\hypertarget{newton}{%
+\subsection{Planteamiento del problema: Ley de enfriamiento de Newton}\label{newton}}
 
 La ley de enfriamiento de Newton establece que cuando un sólido a temperatura inicial \(T_0\) se deja enfriar en un ambiente de temperatura \(T_a\), su temperatura en función del tiempo \(t\) viene dada por
 \[T(t)=T_a+(T_0-T_a)e^{-kt}\]
@@ -660,8 +660,8 @@ Visualizamos los datos dibujando la nube de puntos \((t, T)\) con \VERB|\Functio
 
 \begin{center}\includegraphics[width=1\linewidth]{fitting_files/figure-latex/unnamed-chunk-24-1} \end{center}
 
-\hypertarget{ajuste-con-nls}{%
-\subsection{\texorpdfstring{Ajuste con \texttt{nls()}}{Ajuste con nls()}}\label{ajuste-con-nls}}
+\hypertarget{newton-fit}{%
+\subsection{\texorpdfstring{Ajuste con \texttt{nls()}}{Ajuste con nls()}}\label{newton-fit}}
 
 Antes de utilizar la función \VERB|\FunctionTok{nls}\NormalTok{()}| crearemos una función para la fórmula de la temperatura en nuestro modelo de la ley de Newton
 \[T(t)=T_a+(T_0-T_a)e^{-kt}\]
@@ -693,8 +693,8 @@ Con los elementos anteriores, ya podemos utilizar la función \VERB|\FunctionTok
 
 En los siguientes apartados extraeremos información del objeto \texttt{fit\_newton} que acabamos de crear y que contiene el ajuste realizado por la función \VERB|\FunctionTok{nls}\NormalTok{()}|.
 
-\hypertarget{coeficientes-1}{%
-\subsection{Coeficientes}\label{coeficientes-1}}
+\hypertarget{newton-coefficients}{%
+\subsection{Coeficientes}\label{newton-coefficients}}
 
 Los coeficientes del ajuste son:
 
@@ -720,8 +720,8 @@ y el ajuste quedaría:
 
 \[T(t) = 19.03 + (104.98 - 19.03)e^{- 0.06 t}.\]
 
-\hypertarget{predicciones-1}{%
-\subsection{Predicciones}\label{predicciones-1}}
+\hypertarget{newton-predict}{%
+\subsection{Predicciones}\label{newton-predict}}
 
 Podemos realizar predicciones de los valores de la variable dependiente con la función \VERB|\FunctionTok{predict}\NormalTok{()}|, igual que en el caso lineal.
 
@@ -742,8 +742,8 @@ Los pronósticos para las temperaturas a la que se encontrará la barra de hierr
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{gruxe1fico-ajuste}{%
-\subsection{Gráfico ajuste}\label{gruxe1fico-ajuste}}
+\hypertarget{newton-smooth}{%
+\subsection{Gráfico ajuste}\label{newton-smooth}}
 
 Como en el capítulo anterior usamos la función \VERB|\FunctionTok{geom\_smooth}\NormalTok{()}| para representar el ajuste:
 

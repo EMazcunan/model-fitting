@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.4 Predicciones | Ajuste de datos con R</title>
-  <meta name="description" content="3.4 Predicciones | Ajuste de datos con R" />
+  <title>2.4 Coeficientes | Ajuste de datos con R</title>
+  <meta name="description" content="2.4 Coeficientes | Ajuste de datos con R" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.4 Predicciones | Ajuste de datos con R" />
+  <meta property="og:title" content="2.4 Coeficientes | Ajuste de datos con R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="EMazcunan/model-fitting" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.4 Predicciones | Ajuste de datos con R" />
+  <meta name="twitter:title" content="2.4 Coeficientes | Ajuste de datos con R" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="coeficientes-1.html"/>
-<link rel="next" href="gráfico-ajuste.html"/>
+<link rel="prev" href="formulas.html"/>
+<link rel="next" href="cauchy-fitted.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -172,22 +172,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1</b> Paquetes</a></li>
 <li class="chapter" data-level="2" data-path="lm.html"><a href="lm.html"><i class="fa fa-check"></i><b>2</b> Modelos lineales</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="planteamiento-del-problema-el-prisma-de-vidrio.html"><a href="planteamiento-del-problema-el-prisma-de-vidrio.html"><i class="fa fa-check"></i><b>2.1</b> Planteamiento del problema: El prisma de vidrio</a></li>
-<li class="chapter" data-level="2.2" data-path="ajuste-con-lm.html"><a href="ajuste-con-lm.html"><i class="fa fa-check"></i><b>2.2</b> Ajuste con <code>lm()</code></a></li>
-<li class="chapter" data-level="2.3" data-path="fórmulas-en-r.html"><a href="fórmulas-en-r.html"><i class="fa fa-check"></i><b>2.3</b> Fórmulas en R</a></li>
-<li class="chapter" data-level="2.4" data-path="coeficientes.html"><a href="coeficientes.html"><i class="fa fa-check"></i><b>2.4</b> Coeficientes</a></li>
-<li class="chapter" data-level="2.5" data-path="valores-ajustados.html"><a href="valores-ajustados.html"><i class="fa fa-check"></i><b>2.5</b> Valores ajustados</a></li>
-<li class="chapter" data-level="2.6" data-path="residuos.html"><a href="residuos.html"><i class="fa fa-check"></i><b>2.6</b> Residuos</a></li>
-<li class="chapter" data-level="2.7" data-path="predicciones.html"><a href="predicciones.html"><i class="fa fa-check"></i><b>2.7</b> Predicciones</a></li>
-<li class="chapter" data-level="2.8" data-path="gráfico-del-ajuste.html"><a href="gráfico-del-ajuste.html"><i class="fa fa-check"></i><b>2.8</b> Gráfico del ajuste</a></li>
+<li class="chapter" data-level="2.1" data-path="cauchy.html"><a href="cauchy.html"><i class="fa fa-check"></i><b>2.1</b> Planteamiento del problema: El prisma de vidrio</a></li>
+<li class="chapter" data-level="2.2" data-path="cauchy-fit.html"><a href="cauchy-fit.html"><i class="fa fa-check"></i><b>2.2</b> Ajuste con <code>lm()</code></a></li>
+<li class="chapter" data-level="2.3" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>2.3</b> Fórmulas en R</a></li>
+<li class="chapter" data-level="2.4" data-path="cauchy-coefficientes.html"><a href="cauchy-coefficientes.html"><i class="fa fa-check"></i><b>2.4</b> Coeficientes</a></li>
+<li class="chapter" data-level="2.5" data-path="cauchy-fitted.html"><a href="cauchy-fitted.html"><i class="fa fa-check"></i><b>2.5</b> Valores ajustados</a></li>
+<li class="chapter" data-level="2.6" data-path="cauchy-residuals.html"><a href="cauchy-residuals.html"><i class="fa fa-check"></i><b>2.6</b> Residuos</a></li>
+<li class="chapter" data-level="2.7" data-path="cauchy-predict.html"><a href="cauchy-predict.html"><i class="fa fa-check"></i><b>2.7</b> Predicciones</a></li>
+<li class="chapter" data-level="2.8" data-path="cauchy-smooth.html"><a href="cauchy-smooth.html"><i class="fa fa-check"></i><b>2.8</b> Gráfico del ajuste</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="nls.html"><a href="nls.html"><i class="fa fa-check"></i><b>3</b> Modelos no lineales</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="planteamiento-del-problema-ley-de-enfriamiento-de-newton.html"><a href="planteamiento-del-problema-ley-de-enfriamiento-de-newton.html"><i class="fa fa-check"></i><b>3.1</b> Planteamiento del problema: Ley de enfriamiento de Newton</a></li>
-<li class="chapter" data-level="3.2" data-path="ajuste-con-nls.html"><a href="ajuste-con-nls.html"><i class="fa fa-check"></i><b>3.2</b> Ajuste con <code>nls()</code></a></li>
-<li class="chapter" data-level="3.3" data-path="coeficientes-1.html"><a href="coeficientes-1.html"><i class="fa fa-check"></i><b>3.3</b> Coeficientes</a></li>
-<li class="chapter" data-level="3.4" data-path="predicciones-1.html"><a href="predicciones-1.html"><i class="fa fa-check"></i><b>3.4</b> Predicciones</a></li>
-<li class="chapter" data-level="3.5" data-path="gráfico-ajuste.html"><a href="gráfico-ajuste.html"><i class="fa fa-check"></i><b>3.5</b> Gráfico ajuste</a></li>
+<li class="chapter" data-level="3.1" data-path="newton.html"><a href="newton.html"><i class="fa fa-check"></i><b>3.1</b> Planteamiento del problema: Ley de enfriamiento de Newton</a></li>
+<li class="chapter" data-level="3.2" data-path="newton-fit.html"><a href="newton-fit.html"><i class="fa fa-check"></i><b>3.2</b> Ajuste con <code>nls()</code></a></li>
+<li class="chapter" data-level="3.3" data-path="newton-coefficients.html"><a href="newton-coefficients.html"><i class="fa fa-check"></i><b>3.3</b> Coeficientes</a></li>
+<li class="chapter" data-level="3.4" data-path="newton-predict.html"><a href="newton-predict.html"><i class="fa fa-check"></i><b>3.4</b> Predicciones</a></li>
+<li class="chapter" data-level="3.5" data-path="newton-smooth.html"><a href="newton-smooth.html"><i class="fa fa-check"></i><b>3.5</b> Gráfico ajuste</a></li>
 </ul></li>
 <li class="divider"></li>
 </ul>
@@ -215,15 +215,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 
-<div id="predicciones-1" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Predicciones<a href="predicciones-1.html#predicciones-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Podemos realizar predicciones de los valores de la variable dependiente con la función <code class="sourceCode r"><span class="fu">predict</span>()</code>, igual que en el caso lineal.</p>
-<p>Los pronósticos para las temperaturas a la que se encontrará la barra de hierro a los <span class="math inline">\(70\)</span>, <span class="math inline">\(80\)</span> y <span class="math inline">\(90\)</span> minutos serían:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="predicciones-1.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(</span>
-<span id="cb30-2"><a href="predicciones-1.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  fit_newton,</span>
-<span id="cb30-3"><a href="predicciones-1.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">time =</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>))</span>
-<span id="cb30-4"><a href="predicciones-1.html#cb30-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre class="egitbook-output"><code>[1] 20.32380 19.74029 19.41986</code></pre>
+<div id="cauchy-coefficientes" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Coeficientes<a href="cauchy-coefficientes.html#cauchy-coefficientes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para obtener los coeficientes del ajuste usamos la función <code class="sourceCode r"><span class="fu">coefficients</span>()</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="cauchy-coefficientes.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(fit_cauchy)</span></code></pre></div>
+<pre class="egitbook-output"><code>  (Intercept) I(1/lambda^2) I(1/lambda^4) 
+ 1.500310e+00  4.908268e+03  7.078042e+06 </code></pre>
+<p>La salida nos informa de que los coeficientes que solucionan el problema de mínimos cuadrados (ecuaciones normales de Gauss) son:
+<span class="math display">\[\hat{\beta_1} = 1.50031,\]</span>
+<span class="math display">\[\hat{\beta_2} = 4908.268,\]</span>
+y
+<span class="math display">\[\hat{\beta_3} = 7078042.\]</span></p>
+<p><strong>Nota:</strong> Dependiendo de la configuración, los valores de la salida pueden aparecer en notación científica, simbolizando <code>e+00</code>, <code>e+03</code> y <code>e+06</code> que hay que multiplicar por <span class="math inline">\(10^0=1\)</span>, <span class="math inline">\(10^3=1000\)</span> y <span class="math inline">\(10^6=1000000\)</span> respectivamente.</p>
+<p>Por tanto el ajuste buscado es
+<span class="math display">\[n(\lambda) = 1.50031 + \frac{4908.268}{\lambda^2} + \frac{7078042}{\lambda^4}.\]</span></p>
 </div>
 
             </section>
@@ -231,8 +236,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="coeficientes-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="gráfico-ajuste.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="formulas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cauchy-fitted.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
