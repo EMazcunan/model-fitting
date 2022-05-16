@@ -139,6 +139,17 @@
 %   breaklines=true
 % }
 
+
+% highr::hi_latex(..., markup = cmd_pandoc_latex)
+% `...`{.R}
+\renewcommand{\DecValTok}[1]{\textcolor[RGB]{64, 160, 112}{\texttt{#1}}}
+\renewcommand{\FloatTok}[1]{\textcolor[RGB]{64, 160, 112}{\texttt{#1}}}
+\renewcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\texttt{#1}}}
+\renewcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\texttt{#1}}}
+\renewcommand{\NormalTok}[1]{\texttt{#1}}
+
+
+
 \pgfplotsset{compat=1.18}
 
 
