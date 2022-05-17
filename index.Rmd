@@ -1,14 +1,18 @@
 ---
 documentclass: "mnye"
-classoption: [title=normal, notoc, bib=normal]
 author: "Eva María Mazcuñán Navarro"
 github-repo: "EMazcunan/model-fitting"
 title: "Ajuste de datos con R"
 degree: "Grado en Ingeniería Informática/Mecánica"
+degreeKey: "mecinf"
 term: "2021-2022"
 bibliography: [book.bib, packages.bib]
 link-citations: yes
 site: bookdown::bookdown_site
+---
+
+---
+classoption: `r sprintf("[title=normal,notoc,nobib,degree=%s]", rmarkdown::yaml_front_matter('index.Rmd')$degreeKey)`
 ---
 
 ```{r,child="preamble.Rmd"}

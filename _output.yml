@@ -3,6 +3,6 @@ ehtml::egitbook:
   config:
     toc:
       collapse: section
-epdf::epdf_book: default
+epdf::auto_pdf_book: default
 # epdf::epdf_book:
 #     pandoc_args: --listings
