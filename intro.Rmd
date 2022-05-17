@@ -4,7 +4,7 @@ En esta práctica estudiaremos cómo ajustar un modelo a un conjunto de datos ex
 
 Mientras que en los problemas que hemos a mano hasta ahora hemos considerado únicamente modelos lineales de uno o dos parámetros, en esta práctica consideraremos modelos tanto lineales como no lineales, y con un número arbitrario de parámetros. También podremos trabajar con un número de datos mucho más elevado que en los problemas resueltos a mano.  
 
-Seguiremos trabajando con una variable dependiente $y$ y una única variable dependiente $x$, aunque las técnicas que presentaremos se generalizan sin dificultad al caso de varias variables independientes. 
+Seguiremos trabajando con una variable dependiente $y$ y una única variable independiente $x$, aunque las técnicas que presentaremos se generalizan sin dificultad al caso de varias variables independientes. 
 
 ## Requisitos previos {#prerequisites .unnumbered}
 
